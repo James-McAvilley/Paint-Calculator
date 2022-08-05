@@ -1,9 +1,12 @@
-import java.awt.*;
 import java.util.Scanner;
+import java.text.DecimalFormat;
 
 class Main {
     //To calculate the cost of all walls combined, a global variable is needed
     public static float overallCost;
+    //Used to convert monetary values to two decimal places
+    public static final DecimalFormat df = new DecimalFormat("0.00");
+
 
     public static void main(String[] args) {
 
@@ -71,7 +74,7 @@ class Main {
             }
 
             //Collects initial values to calculate paint for a triangular wall
-            else if(shape.equals("T")){
+            else{
                 System.out.println("Enter height in meters: ");
                 float height = scan.nextFloat();
                 System.out.println("Enter base in meters: ");
@@ -88,14 +91,10 @@ class Main {
                 //Calculates the cost of the wall and adds it to the overall cost
                 overallCost += calculateTriangle(height, base, coats, paintCost, doors, wasteFactor);
             }
-
-
-
-
         }
 
         //Outputs the cost of all the required paint
-        System.out.println("Total cost for all paint required: " + overallCost);
+        System.out.println("Total cost for all paint required: £" + df.format(overallCost));
     }
 
     public static float calculateRectangle(float width, float height, int coats, float paintCost, int doors, float wasteFactor){
@@ -104,11 +103,12 @@ class Main {
         float totalPaintRequired = requiredPaint * coats;
         float totalWallCost = requiredPaint * coats * paintCost;
 
+
         //Output canvas size, amount of paint needed and the cost
-        System.out.println("Size of the canvas in square meters " + canvasSize);
+        System.out.println("Size of the canvas in square meters: " + canvasSize);
         System.out.println("Paint required per coat in litres: " + requiredPaint);
         System.out.println("Total Paint required in litres: " + totalPaintRequired);
-        System.out.println("Cost of paint required " + totalWallCost);
+        System.out.println("Cost of paint required: £" + df.format(totalWallCost));
 
         return totalWallCost;
     }
@@ -120,10 +120,10 @@ class Main {
         float totalWallCost = requiredPaint * coats * paintCost;
 
         //Output canvas size, amount of paint needed and the cost
-        System.out.println("Size of the canvas in square meters " + canvasSize);
+        System.out.println("Size of the canvas in square meters: " + canvasSize);
         System.out.println("Paint required per coat in litres: " + requiredPaint);
         System.out.println("Total Paint required in litres: " + totalPaintRequired);
-        System.out.println("Cost of paint required " + totalWallCost);
+        System.out.println("Cost of paint required: £" + df.format(totalWallCost));
 
         return totalWallCost;
     }
