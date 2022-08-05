@@ -2,36 +2,43 @@ import java.awt.*;
 import java.util.Scanner;
 
 class Main {
+    //To calculate the cost of all walls combined, a global variable is needed
     public static float overallCost;
 
     public static void main(String[] args) {
 
-        //Take inputs
+        //Take initial values
         Scanner scan = new Scanner(System.in);
         System.out.println("How many walls are you painting?");
         int walls = scan.nextInt();
 
-        System.out.println("Would you like to account for paint that might be wasted?");
+        //Asks the user if they'd like a buffer in case there are any mistakes or errors while painting
+        System.out.println("Would you like a 10% increase to account for paint that might be wasted?");
         System.out.println("Enter Y for yes or N for No");
         String waste = scan.next();
         waste = waste.toUpperCase();
 
+        //This will be set based on the answer to the previous questing
         float wasteFactor;
 
+        //Make sure the input for waste is valid
         while(!waste.equals("Y") && !waste.equals("N")){
             System.out.println("Enter Y for yes or N for No");
             waste = scan.next();
             waste = waste.toUpperCase();
         }
 
+        //Applies a 10% increase of required paint
         if(waste.equals("Y")){
             wasteFactor = 1.1f;
         }
 
+        //Does not increase required paint
         else{
             wasteFactor = 1.0f;
         }
 
+        //Loops for each wall the user wants to paint
         for (int x = 0; x < walls; x++) {
             System.out.println("Is the wall a triangle or rectangular? ");
             System.out.println("Enter R for rectangular or T for Triangular");
@@ -44,6 +51,7 @@ class Main {
                 shape = shape.toUpperCase();
             }
 
+            //Collects initial values to calculate paint for a rectangular wall
             if(shape.equals("R")){
                 System.out.println("Enter width in meters: ");
                 float width = scan.nextFloat();
@@ -53,12 +61,16 @@ class Main {
                 int coats = scan.nextInt();
                 System.out.println("How much does the paint cost per litre in gbp: ");
                 float paintCost = scan.nextFloat();
+                //As doors are not part of the wall and unlikely to be painted with the same paint
+                //The user can input to remove them from the equation
                 System.out.println("How many doors are on this wall? (enter 2 for double doors)");
                 int doors = scan.nextInt();
 
+                //Calculates the cost of the wall and adds it to the overall cost
                 overallCost += calculateRectangle(width, height, coats, paintCost, doors, wasteFactor);
             }
 
+            //Collects initial values to calculate paint for a triangular wall
             else if(shape.equals("T")){
                 System.out.println("Enter height in meters: ");
                 float height = scan.nextFloat();
@@ -68,9 +80,12 @@ class Main {
                 int coats = scan.nextInt();
                 System.out.println("How much does the paint cost per litre in gbp: ");
                 float paintCost = scan.nextFloat();
+                //As doors are not part of the wall and unlikely to be painted with the same paint
+                //The user can input to remove them from the equation
                 System.out.println("How many doors are on this wall? (enter 2 for double doors)");
                 int doors = scan.nextInt();
 
+                //Calculates the cost of the wall and adds it to the overall cost
                 overallCost += calculateTriangle(height, base, coats, paintCost, doors, wasteFactor);
             }
 
@@ -79,6 +94,7 @@ class Main {
 
         }
 
+        //Outputs the cost of all the required paint
         System.out.println("Total cost for all paint required: " + overallCost);
     }
 
@@ -88,7 +104,7 @@ class Main {
         float totalPaintRequired = requiredPaint * coats;
         float totalWallCost = requiredPaint * coats * paintCost;
 
-        //Output canvas size and the amount of paint needed
+        //Output canvas size, amount of paint needed and the cost
         System.out.println("Size of the canvas in square meters " + canvasSize);
         System.out.println("Paint required per coat in litres: " + requiredPaint);
         System.out.println("Total Paint required in litres: " + totalPaintRequired);
@@ -103,7 +119,7 @@ class Main {
         float totalPaintRequired = requiredPaint * coats;
         float totalWallCost = requiredPaint * coats * paintCost;
 
-        //Output canvas size and the amount of paint needed
+        //Output canvas size, amount of paint needed and the cost
         System.out.println("Size of the canvas in square meters " + canvasSize);
         System.out.println("Paint required per coat in litres: " + requiredPaint);
         System.out.println("Total Paint required in litres: " + totalPaintRequired);
